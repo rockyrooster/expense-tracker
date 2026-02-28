@@ -99,14 +99,13 @@ export default function Home() {
             >
               {isDark ? '☀️ Light' : '🌙 Dark'}
             </button>
-            {expenses.length > 0 && (
-              <button
-                onClick={() => setShowExport(true)}
-                className="px-3 py-2 text-sm text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              >
-                ☁️ Export
-              </button>
-            )}
+            <button
+              onClick={() => setShowExport(true)}
+              disabled={expenses.length === 0}
+              className="px-3 py-2 text-sm border rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+            >
+              📤 Export
+            </button>
             <button
               onClick={() => { setEditingExpense(null); setShowForm(true); }}
               className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
