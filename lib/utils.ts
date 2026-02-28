@@ -13,15 +13,6 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Other: '#8b5cf6',
 };
 
-export const CATEGORY_ICONS: Record<string, string> = {
-  Food: '🍽️',
-  Transportation: '🚗',
-  Entertainment: '🎬',
-  Shopping: '🛍️',
-  Bills: '💡',
-  Other: '📦',
-};
-
 export function lightenHex(hex: string, factor = 0.45): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);

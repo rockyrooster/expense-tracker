@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Expense } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
+import { Receipt, CalendarDays, BarChart2, Archive, Download, Mail, Table2, Box, Cloud, X, AlertTriangle, LucideProps } from 'lucide-react';
 
 interface Props {
   expenses: Expense[];
@@ -25,34 +26,34 @@ const TEMPLATES = [
     id: 'tax',
     name: 'Tax Report',
     description: 'All expenses grouped by category, formatted for tax filing',
-    icon: '🧾',
+    Icon: Receipt,
   },
   {
     id: 'monthly',
     name: 'Monthly Summary',
     description: 'Current month expenses with totals and category breakdown',
-    icon: '📅',
+    Icon: CalendarDays,
   },
   {
     id: 'category',
     name: 'Category Analysis',
     description: 'Spending patterns and trends across all categories',
-    icon: '📊',
+    Icon: BarChart2,
   },
   {
     id: 'custom',
     name: 'Full Export',
     description: 'All expenses, all fields, no filters applied',
-    icon: '📦',
+    Icon: Archive,
   },
 ];
 
 const DESTINATIONS = [
-  { id: 'download', label: 'Download', icon: '⬇️', connected: true },
-  { id: 'email', label: 'Email', icon: '📧', connected: true },
-  { id: 'sheets', label: 'Google Sheets', icon: '📗', connected: false },
-  { id: 'dropbox', label: 'Dropbox', icon: '📦', connected: false },
-  { id: 'onedrive', label: 'OneDrive', icon: '☁️', connected: false },
+  { id: 'download', label: 'Download', Icon: Download, connected: true },
+  { id: 'email', label: 'Email', Icon: Mail, connected: true },
+  { id: 'sheets', label: 'Google Sheets', Icon: Table2, connected: false },
+  { id: 'dropbox', label: 'Dropbox', Icon: Box, connected: false },
+  { id: 'onedrive', label: 'OneDrive', Icon: Cloud, connected: false },
 ] as const;
 
 const HISTORY_KEY = 'expense-tracker-export-history';
@@ -176,10 +177,10 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">☁️ Cloud Export</h2>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2"><Cloud size={18} className="text-indigo-500" /> Cloud Export</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{expenses.length} expenses · {formatCurrency(expenses.reduce((s, e) => s + e.amount, 0))} total</p>
           </div>
-          <button onClick={handleClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-2xl w-8 h-8 flex items-center justify-center active:scale-90 transition-transform">×</button>
+          <button onClick={handleClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 w-8 h-8 flex items-center justify-center active:scale-90 transition-transform rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"><X size={18} /></button>
         </div>
 
         {/* Tabs */}
@@ -219,7 +220,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                           : 'border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
-                      <span className="text-xl">{t.icon}</span>
+                      <t.Icon size={18} className={`mt-0.5 flex-shrink-0 ${template === t.id ? 'text-indigo-500' : 'text-slate-400'}`} />
                       <div className="min-w-0">
                         <p className={`text-sm font-medium ${template === t.id ? 'text-indigo-700 dark:text-indigo-300' : 'text-slate-800 dark:text-slate-200'}`}>{t.name}</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.description}</p>
@@ -254,7 +255,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                           : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
-                      <span className="text-xl">{d.icon}</span>
+                      <d.Icon size={18} />
                       <span className="text-center leading-tight">{d.label}</span>
                       {!d.connected && (
                         <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-amber-400" title="Not connected" />
@@ -263,7 +264,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                   ))}
                 </div>
                 {!selectedDest.connected && (
-                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">⚠️ {selectedDest.label} not connected — this will simulate the export flow</p>
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 flex items-center gap-1.5"><AlertTriangle size={12} /> {selectedDest.label} not connected — this will simulate the export flow</p>
                 )}
               </div>
 
@@ -321,7 +322,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
           {tab === 'history' && (
             <div className="p-5">
               {history.length === 0 ? (
-                <div className="py-16 text-center text-slate-400 text-sm">No exports yet</div>
+                <div className="py-16 text-center text-slate-400 text-sm">Nothing exported yet</div>
               ) : (
                 <div className="space-y-2">
                   {history.map(entry => (
@@ -345,7 +346,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
             <div className="p-5 space-y-3">
               {DESTINATIONS.map(d => (
                 <div key={d.id} className="flex items-center gap-3 p-4 border border-slate-200 dark:border-slate-600 rounded-xl">
-                  <span className="text-2xl">{d.icon}</span>
+                  <d.Icon size={20} className="text-slate-400 flex-shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{d.label}</p>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">

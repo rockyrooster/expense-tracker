@@ -2,6 +2,7 @@
 
 import { Expense, FilterState, Category } from '@/lib/types';
 import { CATEGORIES, CATEGORY_COLORS, formatCurrency, formatDate } from '@/lib/utils';
+import { Pencil, Trash2 } from 'lucide-react';
 import CustomSelect from '@/components/CustomSelect';
 
 interface Props {
@@ -45,7 +46,7 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
       {expenses.length === 0 ? (
         <div className="py-16 text-center">
           <p className="text-sm text-slate-400 dark:text-slate-500">
-            {hasActiveFilters ? 'No expenses match your filters' : 'No expenses yet — add your first one!'}
+            {hasActiveFilters ? 'Nothing matches those filters' : 'No expenses yet — start tracking to see your spending.'}
           </p>
         </div>
       ) : (
@@ -76,17 +77,19 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
               <div className="flex gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => onEdit(expense)}
-                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded transition-all active:scale-90"
+                  className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded transition-all active:scale-90"
+                  aria-label="Edit expense"
                 >
-                  Edit
+                  <Pencil size={13} />
                 </button>
                 <button
                   onClick={() => {
                     if (confirm('Delete this expense?')) onDelete(expense.id);
                   }}
-                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded transition-all active:scale-90"
+                  className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded transition-all active:scale-90"
+                  aria-label="Delete expense"
                 >
-                  Delete
+                  <Trash2 size={13} />
                 </button>
               </div>
             </div>

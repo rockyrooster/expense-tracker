@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Expense, Category } from '@/lib/types';
 import { CATEGORIES } from '@/lib/utils';
+import { X } from 'lucide-react';
 import CustomSelect from '@/components/CustomSelect';
 
 interface Props {
@@ -62,9 +63,9 @@ export default function ExpenseForm({ expense, onSave, onClose }: Props) {
           </h2>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-2xl leading-none w-8 h-8 flex items-center justify-center"
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           >
-            ×
+            <X size={18} />
           </button>
         </div>
 

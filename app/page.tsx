@@ -4,10 +4,12 @@ import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Expense, FilterState } from '@/lib/types';
 import { getExpenses, saveExpenses } from '@/lib/storage';
-import { generateId, exportToCSV, formatCurrency, getThisMonthTotal, CATEGORY_COLORS, CATEGORY_ICONS, lightenHex } from '@/lib/utils';
+import { generateId, exportToCSV, formatCurrency, getThisMonthTotal, CATEGORY_COLORS, lightenHex } from '@/lib/utils';
 import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseList from '@/components/ExpenseList';
 import CloudExportDrawer from '@/components/CloudExportDrawer';
+import CategoryIcon from '@/components/CategoryIcon';
+import { Sun, Moon, Upload, Plus } from 'lucide-react';
 
 const SpendingChart = dynamic(() => import('@/components/SpendingChart'), { ssr: false });
 
@@ -97,20 +99,20 @@ export default function Home() {
               className="flex items-center gap-1.5 px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95"
               aria-label="Toggle theme"
             >
-              {isDark ? '☀️ Light' : '🌙 Dark'}
+              {isDark ? <><Sun size={14} /> Light</> : <><Moon size={14} /> Dark</>}
             </button>
             <button
               onClick={() => setShowExport(true)}
               disabled={expenses.length === 0}
-              className="px-3 py-2 text-sm border rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm border rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent active:scale-95"
             >
-              📤 Export
+              <Upload size={14} /> Export
             </button>
             <button
               onClick={() => { setEditingExpense(null); setShowForm(true); }}
-              className="px-4 py-2 text-sm border-2 border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white transition-all font-medium active:scale-95"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm border-2 border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white transition-all font-medium active:scale-95"
             >
-              + Add Expense
+              <Plus size={15} /> Add Expense
             </button>
           </div>
         </div>
@@ -119,21 +121,21 @@ export default function Home() {
       <main className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* Stats cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Total All Time" value={formatCurrency(totalAll)} />
-          <StatCard label="This Month" value={formatCurrency(thisMonth)} />
-          <StatCard label="Total Expenses" value={expenses.length.toString()} />
-          <StatCard label="Categories Used" value={categoriesUsed.toString()} />
+          <HeroStatCard label="This Month" value={formatCurrency(thisMonth)} />
+          <StatCard label="All Time" value={formatCurrency(totalAll)} />
+          <StatCard label="Transactions" value={expenses.length.toString()} />
+          <StatCard label="Categories" value={categoriesUsed.toString()} />
         </div>
 
         {/* Chart + category breakdown */}
         {expenses.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-white to-indigo-50/50 dark:from-slate-800 dark:to-indigo-950/30 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4">
-              <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Spending by Category</h2>
+              <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Where It Went</h2>
               <SpendingChart data={categoryTotals} />
             </div>
             <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4">
-              <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Category Breakdown</h2>
+              <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">By Category</h2>
               <div className="space-y-3">
                 {categoryTotals.map(({ name, value }) => {
                   const pct = totalAll > 0 ? (value / totalAll) * 100 : 0;
@@ -142,7 +144,7 @@ export default function Home() {
                     <div key={name}>
                       <div className="flex justify-between text-sm mb-1.5">
                         <span className="text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-                          <span>{CATEGORY_ICONS[name]}</span>
+                          <CategoryIcon category={name} size={13} style={{ color }} strokeWidth={2} />
                           {name}
                         </span>
                         <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(value)}</span>
@@ -184,6 +186,15 @@ export default function Home() {
           onClose={() => { setShowForm(false); setEditingExpense(null); }}
         />
       )}
+    </div>
+  );
+}
+
+function HeroStatCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-indigo-600 dark:bg-indigo-700 rounded-xl shadow-sm p-4 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 cursor-default">
+      <p className="text-xs font-medium text-indigo-200 mb-1 uppercase tracking-wide">{label}</p>
+      <p className="text-2xl font-bold text-white">{value}</p>
     </div>
   );
 }
