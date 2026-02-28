@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Expense, FilterState } from '@/lib/types';
 import { getExpenses, saveExpenses } from '@/lib/storage';
-import { generateId, exportToCSV, formatCurrency, getThisMonthTotal } from '@/lib/utils';
+import { generateId, exportToCSV, formatCurrency, getThisMonthTotal, CATEGORY_COLORS, CATEGORY_ICONS, lightenHex } from '@/lib/utils';
 import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseList from '@/components/ExpenseList';
 import CloudExportDrawer from '@/components/CloudExportDrawer';
@@ -82,7 +82,7 @@ export default function Home() {
   const categoriesUsed = new Set(expenses.map(e => e.category)).size;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-100 dark:from-slate-800 dark:to-slate-950 transition-colors">
       {/* Header */}
       <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10 transition-colors">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -94,7 +94,7 @@ export default function Home() {
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95"
               aria-label="Toggle theme"
             >
               {isDark ? '☀️ Light' : '🌙 Dark'}
@@ -102,13 +102,13 @@ export default function Home() {
             <button
               onClick={() => setShowExport(true)}
               disabled={expenses.length === 0}
-              className="px-3 py-2 text-sm border rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+              className="px-3 py-2 text-sm border rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent active:scale-95"
             >
               📤 Export
             </button>
             <button
               onClick={() => { setEditingExpense(null); setShowForm(true); }}
-              className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+              className="px-4 py-2 text-sm border-2 border-indigo-600 dark:border-indigo-500 text-indigo-600 dark:text-indigo-400 rounded-lg hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white transition-all font-medium active:scale-95"
             >
               + Add Expense
             </button>
@@ -128,7 +128,7 @@ export default function Home() {
         {/* Chart + category breakdown */}
         {expenses.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4">
+            <div className="bg-gradient-to-br from-white to-indigo-50/50 dark:from-slate-800 dark:to-indigo-950/30 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4">
               <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Spending by Category</h2>
               <SpendingChart data={categoryTotals} />
             </div>
@@ -137,16 +137,20 @@ export default function Home() {
               <div className="space-y-3">
                 {categoryTotals.map(({ name, value }) => {
                   const pct = totalAll > 0 ? (value / totalAll) * 100 : 0;
+                  const color = CATEGORY_COLORS[name] || '#94a3b8';
                   return (
                     <div key={name}>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-slate-600 dark:text-slate-400">{name}</span>
+                      <div className="flex justify-between text-sm mb-1.5">
+                        <span className="text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                          <span>{CATEGORY_ICONS[name]}</span>
+                          {name}
+                        </span>
                         <span className="font-medium text-slate-900 dark:text-slate-100">{formatCurrency(value)}</span>
                       </div>
-                      <div className="h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                      <div className="h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                         <div
-                          className="h-full rounded-full bg-indigo-500 transition-all"
-                          style={{ width: `${pct}%` }}
+                          className="h-full rounded-full transition-all duration-700 ease-out"
+                          style={{ width: `${pct}%`, background: `linear-gradient(to right, ${color}, ${lightenHex(color, 0.55)})` }}
                         />
                       </div>
                     </div>
@@ -186,7 +190,7 @@ export default function Home() {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4 transition-colors">
+    <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 cursor-default">
       <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{label}</p>
       <p className="text-xl font-bold text-slate-900 dark:text-slate-100">{value}</p>
     </div>

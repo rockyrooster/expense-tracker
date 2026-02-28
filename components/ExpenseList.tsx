@@ -31,20 +31,6 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
           className="min-w-[160px]"
         />
 
-        <input
-          type="date"
-          value={filter.dateFrom}
-          onChange={e => onFilterChange({ ...filter, dateFrom: e.target.value })}
-          className={controlBase}
-        />
-        <span className="text-slate-400 dark:text-slate-500 text-sm">to</span>
-        <input
-          type="date"
-          value={filter.dateTo}
-          onChange={e => onFilterChange({ ...filter, dateTo: e.target.value })}
-          className={controlBase}
-        />
-
         {hasActiveFilters && (
           <button
             onClick={() => onFilterChange({ category: 'All', dateFrom: '', dateTo: '' })}
@@ -63,7 +49,14 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
           </p>
         </div>
       ) : (
-        <div className="divide-y divide-slate-50 dark:divide-slate-700">
+        <>
+          {/* Column headers */}
+          <div className="px-4 py-2 border-b-2 border-slate-200 dark:border-slate-600 flex items-center gap-3 bg-slate-100 dark:bg-slate-700/80">
+            <div className="w-2.5 flex-shrink-0" />
+            <p className="flex-1 text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider">Expense</p>
+            <p className="text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider flex-shrink-0">Amount</p>
+          </div>
+          <div className="divide-y divide-slate-50 dark:divide-slate-700">
           {expenses.map(expense => (
             <div
               key={expense.id}
@@ -83,7 +76,7 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
               <div className="flex gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => onEdit(expense)}
-                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded transition-colors"
+                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded transition-all active:scale-90"
                 >
                   Edit
                 </button>
@@ -91,25 +84,29 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
                   onClick={() => {
                     if (confirm('Delete this expense?')) onDelete(expense.id);
                   }}
-                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded transition-colors"
+                  className="px-2 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded transition-all active:scale-90"
                 >
                   Delete
                 </button>
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        </>
       )}
 
       {/* Footer total */}
       {expenses.length > 0 && (
         <div className="px-4 py-3 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center">
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            {expenses.length} expense{expenses.length !== 1 ? 's' : ''}
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+            {expenses.length} {expenses.length !== 1 ? 'expenses' : 'expense'}
           </p>
-          <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-            {formatCurrency(expenses.reduce((sum, e) => sum + e.amount, 0))}
-          </p>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-500 dark:text-slate-400">Total</span>
+            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              {formatCurrency(expenses.reduce((sum, e) => sum + e.amount, 0))}
+            </span>
+          </div>
         </div>
       )}
     </div>

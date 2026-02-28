@@ -88,10 +88,18 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [tab, setTab] = useState<'export' | 'history' | 'integrations'>('export');
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setHistory(getHistory());
+    const frame = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
+
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 300);
+  };
 
   const getFilteredExpenses = () => {
     const now = new Date();
@@ -143,7 +151,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
     saveHistory(updated);
 
     setLoading(false);
-    setTimeout(() => { setSuccess(''); onClose(); }, 1800);
+    setTimeout(() => { setSuccess(''); handleClose(); }, 1800);
   };
 
   const generateShareLink = () => {
@@ -158,17 +166,20 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex">
       {/* Backdrop */}
-      <div className="flex-1 bg-black/40" onClick={onClose} />
+      <div
+        className={`flex-1 transition-opacity duration-300 ${visible ? 'bg-black/40' : 'bg-black/0'}`}
+        onClick={handleClose}
+      />
 
       {/* Drawer */}
-      <div className="w-full max-w-md bg-white dark:bg-slate-800 flex flex-col shadow-2xl">
+      <div className={`w-full max-w-md bg-white dark:bg-slate-800 flex flex-col shadow-2xl transform transition-all duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-[0.98]'}`}>
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">☁️ Cloud Export</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{expenses.length} expenses · {formatCurrency(expenses.reduce((s, e) => s + e.amount, 0))} total</p>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-2xl w-8 h-8 flex items-center justify-center">×</button>
+          <button onClick={handleClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-2xl w-8 h-8 flex items-center justify-center active:scale-90 transition-transform">×</button>
         </div>
 
         {/* Tabs */}
@@ -202,10 +213,10 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                     <button
                       key={t.id}
                       onClick={() => setTemplate(t.id)}
-                      className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-colors ${
+                      className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-all duration-150 ${
                         template === t.id
-                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30'
-                          : 'border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'
+                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 shadow-sm'
+                          : 'border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
                       <span className="text-xl">{t.icon}</span>
@@ -237,10 +248,10 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                     <button
                       key={d.id}
                       onClick={() => setDestination(d.id as Destination)}
-                      className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-medium transition-colors relative ${
+                      className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-medium transition-all duration-150 relative ${
                         destination === d.id
-                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                          : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 shadow-sm'
+                          : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
                       <span className="text-xl">{d.icon}</span>
@@ -262,9 +273,9 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Auto-export Schedule</label>
                   <button
                     onClick={() => setScheduleEnabled(s => !s)}
-                    className={`w-10 h-5 rounded-full transition-colors relative ${scheduleEnabled ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-600'}`}
+                    className={`w-11 h-6 rounded-full transition-colors duration-200 relative ${scheduleEnabled ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-600'}`}
                   >
-                    <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${scheduleEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                    <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${scheduleEnabled ? 'translate-x-5' : 'translate-x-0'}`} />
                   </button>
                 </div>
                 {scheduleEnabled && (
@@ -361,7 +372,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
               <p className="text-sm text-green-600 dark:text-green-400 text-center">{success}</p>
             )}
             <div className="flex gap-3">
-              <button onClick={onClose} className="flex-1 px-4 py-2 text-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+              <button onClick={handleClose} className="flex-1 px-4 py-2 text-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors active:scale-95">
                 Cancel
               </button>
               <button
