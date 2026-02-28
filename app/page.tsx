@@ -7,6 +7,7 @@ import { getExpenses, saveExpenses } from '@/lib/storage';
 import { generateId, exportToCSV, formatCurrency, getThisMonthTotal } from '@/lib/utils';
 import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseList from '@/components/ExpenseList';
+import CloudExportDrawer from '@/components/CloudExportDrawer';
 
 const SpendingChart = dynamic(() => import('@/components/SpendingChart'), { ssr: false });
 
@@ -16,6 +17,7 @@ export default function Home() {
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [filter, setFilter] = useState<FilterState>({ category: 'All', dateFrom: '', dateTo: '' });
   const [isDark, setIsDark] = useState(false);
+  const [showExport, setShowExport] = useState(false);
 
   useEffect(() => {
     setExpenses(getExpenses());
@@ -99,10 +101,10 @@ export default function Home() {
             </button>
             {expenses.length > 0 && (
               <button
-                onClick={() => exportToCSV(expenses)}
+                onClick={() => setShowExport(true)}
                 className="px-3 py-2 text-sm text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
               >
-                Export CSV
+                ☁️ Export
               </button>
             )}
             <button
@@ -165,6 +167,11 @@ export default function Home() {
           onDelete={handleDelete}
         />
       </main>
+
+      {/* Cloud export drawer */}
+      {showExport && (
+        <CloudExportDrawer expenses={expenses} onClose={() => setShowExport(false)} />
+      )}
 
       {/* Add/Edit modal */}
       {showForm && (
