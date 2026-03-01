@@ -5,22 +5,22 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  Bills:          '#f87171', // coral-red (red-400)
-  Transportation: '#4ade80', // mint green (green-400)
-  Entertainment:  '#fbbf24', // amber (amber-400)
-  Shopping:       '#f472b6', // soft pink (pink-400)
-  Food:           '#fb923c', // soft orange (orange-400)
-  Other:          '#a78bfa', // lavender (violet-400)
+  Bills:          '#ef4444', // red
+  Transportation: '#22c55e', // green
+  Entertainment:  '#f59e0b', // amber
+  Shopping:       '#ec4899', // pink
+  Food:           '#f97316', // orange
+  Other:          '#8b5cf6', // violet
 };
 
-// One shade darker — for readable text on the light-tint pill bg in light mode
+// Darker shades — for readable text on the light-tint pill bg in light mode
 export const CATEGORY_TEXT_COLORS: Record<string, string> = {
-  Bills:          '#dc2626', // red-600
-  Transportation: '#16a34a', // green-600
-  Entertainment:  '#d97706', // amber-600
-  Shopping:       '#db2777', // pink-600
-  Food:           '#ea580c', // orange-600
-  Other:          '#7c3aed', // violet-600
+  Bills:          '#b91c1c', // red-700
+  Transportation: '#15803d', // green-700
+  Entertainment:  '#b45309', // amber-700
+  Shopping:       '#be185d', // pink-700
+  Food:           '#c2410c', // orange-700
+  Other:          '#6d28d9', // violet-700
 };
 
 export function lightenHex(hex: string, factor = 0.45): string {
