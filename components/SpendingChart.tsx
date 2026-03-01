@@ -5,9 +5,10 @@ import { CATEGORY_COLORS, formatCurrency, lightenHex } from '@/lib/utils';
 
 interface Props {
   data: { name: string; value: number }[];
+  isDark?: boolean;
 }
 
-export default function SpendingChart({ data }: Props) {
+export default function SpendingChart({ data, isDark = false }: Props) {
   if (data.length === 0) return null;
 
   const total = data.reduce((sum, d) => sum + d.value, 0);
@@ -49,10 +50,10 @@ export default function SpendingChart({ data }: Props) {
               const { cx, cy } = viewBox as { cx: number; cy: number };
               return (
                 <g>
-                  <text x={cx} y={cy - 6} textAnchor="middle" fill="#78716c" fontSize={14} fontWeight={700}>
+                  <text x={cx} y={cy - 4} textAnchor="middle" fill={isDark ? '#f8fafc' : '#0f172a'} fontSize={17} fontWeight={800}>
                     {formatCurrency(total)}
                   </text>
-                  <text x={cx} y={cy + 12} textAnchor="middle" fill="#a8a29e" fontSize={11}>
+                  <text x={cx} y={cy + 14} textAnchor="middle" fill={isDark ? '#64748b' : '#94a3b8'} fontSize={11}>
                     Total
                   </text>
                 </g>
@@ -74,7 +75,7 @@ export default function SpendingChart({ data }: Props) {
         />
         <Legend
           formatter={(value) => (
-            <span style={{ fontSize: '11px', color: '#64748b' }}>{value}</span>
+            <span style={{ fontSize: '11px', color: isDark ? '#94a3b8' : '#64748b' }}>{value}</span>
           )}
         />
       </PieChart>

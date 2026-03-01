@@ -132,7 +132,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-4">
               <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Where It Went</h2>
-              <SpendingChart data={categoryTotals} />
+              <SpendingChart data={categoryTotals} isDark={isDark} />
             </div>
             <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-4">
               <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">By Category</h2>
