@@ -11,9 +11,10 @@ interface Props {
   onFilterChange: (f: FilterState) => void;
   onEdit: (e: Expense) => void;
   onDelete: (id: string) => void;
+  isDark?: boolean;
 }
 
-export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, onDelete }: Props) {
+export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, onDelete, isDark = false }: Props) {
   const hasActiveFilters = filter.category !== 'All' || filter.dateFrom || filter.dateTo;
 
   const controlBase = 'px-3 py-1.5 text-sm text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors';
@@ -74,8 +75,10 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
                   <span
                     className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
                     style={{
-                      backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}20`,
-                      color: CATEGORY_TEXT_COLORS[expense.category] || '#64748b',
+                      backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}25`,
+                      color: isDark
+                        ? (CATEGORY_COLORS[expense.category] || '#94a3b8')
+                        : (CATEGORY_TEXT_COLORS[expense.category] || '#64748b'),
                     }}
                   >
                     {expense.category}

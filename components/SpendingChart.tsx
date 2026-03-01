@@ -1,7 +1,7 @@
 'use client';
 
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
-import { CATEGORY_COLORS, formatCurrency } from '@/lib/utils';
+import { CATEGORY_COLORS, formatCurrency, lightenHex } from '@/lib/utils';
 
 interface Props {
   data: { name: string; value: number }[];
@@ -16,6 +16,17 @@ export default function SpendingChart({ data, isDark = false }: Props) {
   return (
     <ResponsiveContainer width="100%" height={240}>
       <PieChart>
+        <defs>
+          {data.map(entry => {
+            const color = CATEGORY_COLORS[entry.name] || '#94a3b8';
+            return (
+              <linearGradient key={entry.name} id={`grad-${entry.name}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={lightenHex(color, 0.55)} />
+                <stop offset="100%" stopColor={color} />
+              </linearGradient>
+            );
+          })}
+        </defs>
         <Pie
           data={data}
           cx="50%"
@@ -30,7 +41,7 @@ export default function SpendingChart({ data, isDark = false }: Props) {
           {data.map((entry) => (
             <Cell
               key={entry.name}
-              fill={CATEGORY_COLORS[entry.name] || '#94a3b8'}
+              fill={`url(#grad-${entry.name})`}
             />
           ))}
           <Label

@@ -170,6 +170,7 @@ export default function Home() {
           onFilterChange={setFilter}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          isDark={isDark}
         />
       </main>
 
