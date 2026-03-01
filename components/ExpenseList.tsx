@@ -53,16 +53,17 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
       ) : (
         <>
           {/* Column headers */}
-          <div className="px-4 py-2 border-b-2 border-slate-200 dark:border-slate-600 flex items-center gap-3 bg-slate-100 dark:bg-slate-700/80">
+          <div className="px-6 py-2 border-b-2 border-slate-200 dark:border-slate-600 flex items-center gap-3 bg-slate-100 dark:bg-slate-700/80">
             <div className="w-2.5 flex-shrink-0" />
             <p className="flex-1 text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider">Expense</p>
             <p className="text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider flex-shrink-0">Amount</p>
+            <div className="w-[54px] flex-shrink-0" />
           </div>
           <div className="divide-y divide-slate-200 dark:divide-slate-700">
           {expenses.map(expense => (
             <div
               key={expense.id}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
+              className="flex items-center gap-3 px-6 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
             >
               <div
                 className="w-2 h-2 rounded-full flex-shrink-0"
@@ -115,7 +116,7 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
 
       {/* Footer total */}
       {expenses.length > 0 && (
-        <div className="px-4 py-4 border-t-2 border-slate-200 dark:border-slate-600 flex justify-between items-center bg-slate-50 dark:bg-slate-700/40 rounded-b-xl">
+        <div className="px-6 py-4 border-t-2 border-slate-200 dark:border-slate-600 flex justify-between items-center bg-slate-50 dark:bg-slate-700/40 rounded-b-xl">
           <p className="text-sm text-slate-400 dark:text-slate-500">
             {expenses.length} {expenses.length !== 1 ? 'expenses' : 'expense'}
           </p>
