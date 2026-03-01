@@ -200,15 +200,15 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
           ))}
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900/50">
 
           {/* EXPORT TAB */}
           {tab === 'export' && (
-            <div className="p-5 space-y-6">
+            <div className="p-4 space-y-3">
 
               {/* Templates */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Export Template</label>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Export Template</p>
                 <div className="space-y-2">
                   {TEMPLATES.map(t => (
                     <button
@@ -233,17 +233,15 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Preview summary */}
-              <div className="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-3 flex justify-between">
-                <span className="text-sm text-slate-600 dark:text-slate-300">{filtered.length} records</span>
-                <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">{formatCurrency(totalAmount)}</span>
+                <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700 flex justify-between">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{filtered.length} records selected</span>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">{formatCurrency(totalAmount)}</span>
+                </div>
               </div>
 
               {/* Destination */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Send To</label>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Send To</p>
                 <div className="grid grid-cols-3 gap-2">
                   {DESTINATIONS.map(d => (
                     <button
@@ -269,9 +267,9 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
               </div>
 
               {/* Schedule */}
-              <div>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Auto-export Schedule</label>
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Auto-export Schedule</p>
                   <button
                     onClick={() => setScheduleEnabled(s => !s)}
                     className={`w-11 h-6 rounded-full transition-colors duration-200 relative ${scheduleEnabled ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-600'}`}
@@ -299,8 +297,8 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
               </div>
 
               {/* Share link */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Share Link</label>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Share Link</p>
                 {shareLink ? (
                   <div className="flex gap-2">
                     <input readOnly value={shareLink} className="flex-1 px-3 py-2 text-xs border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg" />
@@ -320,13 +318,13 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
 
           {/* HISTORY TAB */}
           {tab === 'history' && (
-            <div className="p-5">
+            <div className="p-4">
               {history.length === 0 ? (
                 <div className="py-16 text-center text-slate-400 text-sm">Nothing exported yet</div>
               ) : (
-                <div className="space-y-2">
+                <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
                   {history.map(entry => (
-                    <div key={entry.id} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                    <div key={entry.id} className="flex items-start gap-3 p-4 border-b border-slate-50 dark:border-slate-700 last:border-0">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{entry.template}</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -343,9 +341,10 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
 
           {/* INTEGRATIONS TAB */}
           {tab === 'integrations' && (
-            <div className="p-5 space-y-3">
+            <div className="p-4">
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
               {DESTINATIONS.map(d => (
-                <div key={d.id} className="flex items-center gap-3 p-4 border border-slate-200 dark:border-slate-600 rounded-xl">
+                <div key={d.id} className="flex items-center gap-3 p-4 border-b border-slate-50 dark:border-slate-700 last:border-0">
                   <d.Icon size={20} className="text-slate-400 flex-shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{d.label}</p>
@@ -362,6 +361,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                   </button>
                 </div>
               ))}
+              </div>
             </div>
           )}
         </div>

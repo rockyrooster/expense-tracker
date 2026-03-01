@@ -192,9 +192,9 @@ export default function Home() {
 
 function HeroStatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-indigo-600 dark:bg-indigo-700 rounded-xl shadow-sm p-4 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 cursor-default">
-      <p className="text-xs font-medium text-indigo-200 mb-1 uppercase tracking-wide">{label}</p>
-      <p className="text-2xl font-bold text-white">{value}</p>
+    <div className="bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-200 dark:border-indigo-800/60 shadow-sm p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 cursor-default">
+      <p className="text-xs font-medium text-indigo-500 dark:text-indigo-400 mb-1 uppercase tracking-wide">{label}</p>
+      <p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">{value}</p>
     </div>
   );
 }
