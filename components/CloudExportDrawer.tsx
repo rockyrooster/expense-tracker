@@ -173,9 +173,9 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
       />
 
       {/* Drawer */}
-      <div className={`w-full max-w-md bg-white dark:bg-slate-800 flex flex-col shadow-2xl transform transition-all duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-[0.98]'}`}>
+      <div className={`w-full max-w-md bg-slate-50 dark:bg-slate-900 flex flex-col shadow-2xl transform transition-all duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-[0.98]'}`}>
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2"><Cloud size={18} className="text-indigo-500" /> Cloud Export</h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{expenses.length} expenses · {formatCurrency(expenses.reduce((s, e) => s + e.amount, 0))} total</p>
@@ -184,7 +184,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-slate-100 dark:border-slate-700 px-5">
+        <div className="flex border-b border-slate-200 dark:border-slate-800 px-5">
           {(['export', 'history', 'integrations'] as const).map(t => (
             <button
               key={t}
@@ -200,7 +200,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
           ))}
         </div>
 
-        <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900/50">
+        <div className="flex-1 overflow-y-auto">
 
           {/* EXPORT TAB */}
           {tab === 'export' && (
@@ -216,13 +216,13 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                       onClick={() => setTemplate(t.id)}
                       className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-all duration-150 ${
                         template === t.id
-                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 shadow-sm'
-                          : 'border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
+                          ? 'border-slate-400 dark:border-slate-500 bg-slate-100 dark:bg-slate-700 shadow-sm'
+                          : 'border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
-                      <t.Icon size={18} className={`mt-0.5 flex-shrink-0 ${template === t.id ? 'text-indigo-500' : 'text-slate-400'}`} />
+                      <t.Icon size={18} className={`mt-0.5 flex-shrink-0 ${template === t.id ? 'text-slate-700 dark:text-slate-200' : 'text-slate-400'}`} />
                       <div className="min-w-0">
-                        <p className={`text-sm font-medium ${template === t.id ? 'text-indigo-700 dark:text-indigo-300' : 'text-slate-800 dark:text-slate-200'}`}>{t.name}</p>
+                        <p className={`text-sm font-medium ${template === t.id ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300'}`}>{t.name}</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{t.description}</p>
                       </div>
                       {template === t.id && (
@@ -249,8 +249,8 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
                       onClick={() => setDestination(d.id as Destination)}
                       className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border text-xs font-medium transition-all duration-150 relative ${
                         destination === d.id
-                          ? 'border-indigo-300 dark:border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 shadow-sm'
-                          : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5 hover:shadow-md'
+                          ? 'border-slate-400 dark:border-slate-500 bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm'
+                          : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:-translate-y-0.5 hover:shadow-md'
                       }`}
                     >
                       <d.Icon size={18} />
@@ -368,7 +368,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
 
         {/* Footer */}
         {tab === 'export' && (
-          <div className="p-5 border-t border-slate-100 dark:border-slate-700 space-y-2">
+          <div className="p-5 border-t border-slate-200 dark:border-slate-800 space-y-2">
             {success && (
               <p className="text-sm text-green-600 dark:text-green-400 text-center">{success}</p>
             )}
