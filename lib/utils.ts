@@ -5,12 +5,12 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  Food: '#6366f1',
-  Transportation: '#22c55e',
-  Entertainment: '#f59e0b',
-  Shopping: '#ec4899',
-  Bills: '#ef4444',
-  Other: '#8b5cf6',
+  Food: '#b5714a',       // terracotta clay
+  Transportation: '#4d8c6f', // forest sage
+  Entertainment: '#c8923c',  // warm ochre
+  Shopping: '#9e6b8a',   // dusty mauve
+  Bills: '#b04040',      // muted brick
+  Other: '#7a7260',      // warm taupe
 };
 
 export function lightenHex(hex: string, factor = 0.45): string {

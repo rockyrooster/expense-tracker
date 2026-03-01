@@ -84,7 +84,7 @@ export default function Home() {
   const categoriesUsed = new Set(expenses.map(e => e.category)).size;
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 transition-colors">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-300 dark:from-slate-900 dark:to-slate-950 transition-colors">
       {/* Header */}
       <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 transition-colors">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">

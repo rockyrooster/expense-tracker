@@ -49,10 +49,10 @@ export default function SpendingChart({ data }: Props) {
               const { cx, cy } = viewBox as { cx: number; cy: number };
               return (
                 <g>
-                  <text x={cx} y={cy - 6} textAnchor="middle" fill="#6366f1" fontSize={14} fontWeight={700}>
+                  <text x={cx} y={cy - 6} textAnchor="middle" fill="#78716c" fontSize={14} fontWeight={700}>
                     {formatCurrency(total)}
                   </text>
-                  <text x={cx} y={cy + 12} textAnchor="middle" fill="#94a3b8" fontSize={11}>
+                  <text x={cx} y={cy + 12} textAnchor="middle" fill="#a8a29e" fontSize={11}>
                     Total
                   </text>
                 </g>
