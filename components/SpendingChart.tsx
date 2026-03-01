@@ -1,7 +1,7 @@
 'use client';
 
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
-import { CATEGORY_COLORS, formatCurrency, lightenHex } from '@/lib/utils';
+import { CATEGORY_COLORS, formatCurrency } from '@/lib/utils';
 
 interface Props {
   data: { name: string; value: number }[];
@@ -16,19 +16,6 @@ export default function SpendingChart({ data, isDark = false }: Props) {
   return (
     <ResponsiveContainer width="100%" height={240}>
       <PieChart>
-        <defs>
-          {data.map((entry) => {
-            const color = CATEGORY_COLORS[entry.name] || '#94a3b8';
-            const gradId = `grad-${entry.name.replace(/\s+/g, '-')}`;
-            return (
-              <linearGradient key={gradId} id={gradId} x1="0" y1="0" x2="0" y2="240" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor={lightenHex(color, 0.5)} />
-                <stop offset="100%" stopColor={color} />
-              </linearGradient>
-            );
-          })}
-        </defs>
-
         <Pie
           data={data}
           cx="50%"
@@ -37,12 +24,13 @@ export default function SpendingChart({ data, isDark = false }: Props) {
           outerRadius={95}
           paddingAngle={3}
           dataKey="value"
-          strokeWidth={0}
+          strokeWidth={2}
+          stroke={isDark ? '#1e293b' : '#ffffff'}
         >
           {data.map((entry) => (
             <Cell
               key={entry.name}
-              fill={`url(#grad-${entry.name.replace(/\s+/g, '-')})`}
+              fill={CATEGORY_COLORS[entry.name] || '#94a3b8'}
             />
           ))}
           <Label

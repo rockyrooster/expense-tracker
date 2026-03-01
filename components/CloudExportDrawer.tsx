@@ -173,7 +173,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
       />
 
       {/* Drawer */}
-      <div className={`w-full max-w-md bg-slate-50 dark:bg-slate-900 flex flex-col shadow-2xl transform transition-all duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-[0.98]'}`}>
+      <div className={`w-full max-w-md bg-slate-100 dark:bg-slate-900 flex flex-col shadow-2xl transform transition-all duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-[0.98]'}`}>
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800">
           <div>
@@ -379,7 +379,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
               <button
                 onClick={handleExport}
                 disabled={filtered.length === 0 || loading || !!success}
-                className="flex-1 px-4 py-2 text-sm bg-slate-700 dark:bg-slate-600 text-white hover:bg-slate-600 dark:hover:bg-slate-500 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed rounded-lg flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 text-sm bg-slate-700 dark:bg-slate-400 text-white dark:text-slate-900 hover:bg-slate-600 dark:hover:bg-slate-300 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed rounded-lg flex items-center justify-center gap-2 shadow-sm"
               >
                 {loading ? (
                   <>

@@ -57,19 +57,30 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
             <p className="flex-1 text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider">Expense</p>
             <p className="text-xs font-semibold text-slate-600 dark:text-slate-200 uppercase tracking-wider flex-shrink-0">Amount</p>
           </div>
-          <div className="divide-y divide-slate-50 dark:divide-slate-700">
+          <div className="divide-y divide-slate-200 dark:divide-slate-700">
           {expenses.map(expense => (
             <div
               key={expense.id}
               className="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
             >
               <div
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: CATEGORY_COLORS[expense.category] }}
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{expense.description}</p>
-                <p className="text-xs text-slate-400 dark:text-slate-500">{formatDate(expense.date)} · {expense.category}</p>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-xs text-slate-400 dark:text-slate-500">{formatDate(expense.date)}</span>
+                  <span
+                    className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
+                    style={{
+                      backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}22`,
+                      color: CATEGORY_COLORS[expense.category] || '#94a3b8',
+                    }}
+                  >
+                    {expense.category}
+                  </span>
+                </div>
               </div>
               <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex-shrink-0">
                 {formatCurrency(expense.amount)}
@@ -100,13 +111,13 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
 
       {/* Footer total */}
       {expenses.length > 0 && (
-        <div className="px-4 py-3 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+        <div className="px-4 py-4 border-t-2 border-slate-200 dark:border-slate-600 flex justify-between items-center bg-slate-50 dark:bg-slate-700/40 rounded-b-xl">
+          <p className="text-sm text-slate-400 dark:text-slate-500">
             {expenses.length} {expenses.length !== 1 ? 'expenses' : 'expense'}
           </p>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 dark:text-slate-400">Total</span>
-            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide">Total</span>
+            <span className="text-lg font-bold text-slate-900 dark:text-slate-50">
               {formatCurrency(expenses.reduce((sum, e) => sum + e.amount, 0))}
             </span>
           </div>
