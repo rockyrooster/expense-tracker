@@ -324,7 +324,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
               ) : (
                 <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
                   {history.map(entry => (
-                    <div key={entry.id} className="flex items-start gap-3 p-4 border-b border-slate-50 dark:border-slate-700 last:border-0">
+                    <div key={entry.id} className="flex items-start gap-3 p-4 border-b border-slate-200 dark:border-slate-700 last:border-0">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{entry.template}</p>
                         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -344,7 +344,7 @@ export default function CloudExportDrawer({ expenses, onClose }: Props) {
             <div className="p-4">
               <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
               {DESTINATIONS.map(d => (
-                <div key={d.id} className="flex items-center gap-3 p-4 border-b border-slate-50 dark:border-slate-700 last:border-0">
+                <div key={d.id} className="flex items-center gap-3 p-4 border-b border-slate-200 dark:border-slate-700 last:border-0">
                   <d.Icon size={20} className="text-slate-400 flex-shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{d.label}</p>

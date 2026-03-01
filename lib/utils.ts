@@ -5,12 +5,22 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  Bills:          '#c43535', // clear crimson red
-  Food:           '#d4703a', // warm orange (clearly different from red)
-  Entertainment:  '#c89a18', // rich golden amber
-  Transportation: '#3d9e70', // vivid forest green
-  Shopping:       '#b84898', // berry magenta
-  Other:          '#5b8eac', // slate blue
+  Bills:          '#ef4444', // vivid red
+  Transportation: '#22c55e', // vivid green
+  Entertainment:  '#f59e0b', // amber
+  Shopping:       '#ec4899', // pink
+  Food:           '#f97316', // orange — distinct from violet Other
+  Other:          '#8b5cf6', // violet
+};
+
+// Darker shades of each color, for readable text on the light-tint pill bg
+export const CATEGORY_TEXT_COLORS: Record<string, string> = {
+  Bills:          '#b91c1c', // red-700
+  Transportation: '#15803d', // green-700
+  Entertainment:  '#b45309', // amber-700
+  Shopping:       '#be185d', // pink-700
+  Food:           '#c2410c', // orange-700
+  Other:          '#6d28d9', // violet-700
 };
 
 export function lightenHex(hex: string, factor = 0.45): string {

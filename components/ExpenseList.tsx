@@ -1,7 +1,7 @@
 'use client';
 
 import { Expense, FilterState, Category } from '@/lib/types';
-import { CATEGORIES, CATEGORY_COLORS, formatCurrency, formatDate } from '@/lib/utils';
+import { CATEGORIES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, formatCurrency, formatDate } from '@/lib/utils';
 import { Pencil, Trash2 } from 'lucide-react';
 import CustomSelect from '@/components/CustomSelect';
 
@@ -74,8 +74,8 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
                   <span
                     className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
                     style={{
-                      backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}22`,
-                      color: CATEGORY_COLORS[expense.category] || '#94a3b8',
+                      backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}20`,
+                      color: CATEGORY_TEXT_COLORS[expense.category] || '#64748b',
                     }}
                   >
                     {expense.category}
