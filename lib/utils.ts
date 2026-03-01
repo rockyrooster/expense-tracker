@@ -7,7 +7,7 @@ export const CATEGORIES: Category[] = [
 export const CATEGORY_COLORS: Record<string, string> = {
   Bills:          '#ef4444', // red
   Transportation: '#22c55e', // green
-  Entertainment:  '#f59e0b', // amber
+  Entertainment:  '#3b82f6', // blue (distinct from orange Food)
   Shopping:       '#ec4899', // pink
   Food:           '#f97316', // orange
   Other:          '#8b5cf6', // violet
@@ -17,7 +17,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
 export const CATEGORY_TEXT_COLORS: Record<string, string> = {
   Bills:          '#b91c1c', // red-700
   Transportation: '#15803d', // green-700
-  Entertainment:  '#b45309', // amber-700
+  Entertainment:  '#1d4ed8', // blue-700
   Shopping:       '#be185d', // pink-700
   Food:           '#c2410c', // orange-700
   Other:          '#6d28d9', // violet-700
