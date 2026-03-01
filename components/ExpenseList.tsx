@@ -76,9 +76,7 @@ export default function ExpenseList({ expenses, filter, onFilterChange, onEdit, 
                     className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium"
                     style={{
                       backgroundColor: `${CATEGORY_COLORS[expense.category] || '#94a3b8'}25`,
-                      color: isDark
-                        ? (CATEGORY_COLORS[expense.category] || '#94a3b8')
-                        : (CATEGORY_TEXT_COLORS[expense.category] || '#64748b'),
+                      color: isDark ? '#f1f5f9' : (CATEGORY_TEXT_COLORS[expense.category] || '#64748b'),
                     }}
                   >
                     {expense.category}
